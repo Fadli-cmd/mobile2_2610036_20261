@@ -1,0 +1,22 @@
+LANGKAH PENGUMPULAN MODUL 10
+
+1. Jalankan aplikasi (npx expo start), ambil screenshot 6 layar:
+   Login, Tab Home, Tab Produk, Tab Transaksi, Tab Report, Tab Profil.
+   Simpan gambarnya di folder: screenshots/
+
+2. Buat repository KOSONG di GitHub, visibility: Public
+   Nama WAJIB: mobile2_NOBP_20262   (ganti NOBP dengan Nomor BP sendiri)
+
+3. Di terminal VS Code (folder proyek):
+   git add .
+   git commit -m "Modul 10: Bottom Navigation 5 menu dan Dashboard Marketplace"
+   git branch -M main
+   git remote add origin https://github.com/USERNAME/mobile2_NOBP_20262.git
+   git push -u origin main
+   (kalau remote sudah ada: git remote set-url origin <url baru>)
+
+4. Buka repository di browser (tanpa login) -> pastikan bisa dibuka dan folder screenshots ada.
+
+5. Buat file Notepad bernama: NOBP_NamaLengkap.txt
+   Isinya hanya URL repository, lalu unggah ke folder SharePoint dari modul.
+   Batas waktu: hari Minggu (tautan tertutup otomatis).
