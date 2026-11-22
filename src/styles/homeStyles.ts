@@ -41,6 +41,12 @@ export const homeStyles = StyleSheet.create({
     fontWeight: "700",
     color: "#059669",
   },
+  statusBadgeTextDisconnected: {
+    color: "#DC2626",
+  },
+  statusBadgeTextChecking: {
+    color: "#64748B",
+  },
   greetingTitle: {
     fontSize: 22,
     fontWeight: "800",

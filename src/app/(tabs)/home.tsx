@@ -1,11 +1,41 @@
+import {
+  checkServerConnection,
+  getAuthSession,
+  UserData,
+} from "@/services/authService";
 import { homeStyles } from "@/styles/homeStyles";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
-  const { email } = useLocalSearchParams<{ email?: string }>();
+  const [user, setUser] = useState<UserData | null>(null);
+  const [serverStatus, setServerStatus] = useState<
+    "checking" | "connected" | "disconnected"
+  >("checking");
+
+  useEffect(() => {
+    getAuthSession().then((session) => {
+      if (session) setUser(session.user);
+    });
+
+    let active = true;
+    checkServerConnection()
+      .then((connected) => {
+        if (active) {
+          setServerStatus(connected ? "connected" : "disconnected");
+        }
+      })
+      .catch(() => {
+        if (active) setServerStatus("disconnected");
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleMenuPress = (menuName: string, targetRoute?: string) => {
     if (targetRoute) {
@@ -28,13 +58,43 @@ export default function HomeScreen() {
         {/* Kartu Sambutan Sederhana */}
         <View style={homeStyles.welcomeCard}>
           <View style={homeStyles.statusBadge}>
-            <Ionicons name="checkmark-circle" size={15} color="#059669" />
-            <Text style={homeStyles.statusBadgeText}>Berhasil Masuk</Text>
+            <Ionicons
+              name={
+                serverStatus === "connected"
+                  ? "checkmark-circle"
+                  : serverStatus === "disconnected"
+                    ? "close-circle"
+                    : "time"
+              }
+              size={15}
+              color={
+                serverStatus === "connected"
+                  ? "#059669"
+                  : serverStatus === "disconnected"
+                    ? "#DC2626"
+                    : "#64748B"
+              }
+            />
+            <Text
+              style={[
+                homeStyles.statusBadgeText,
+                serverStatus === "disconnected" &&
+                  homeStyles.statusBadgeTextDisconnected,
+                serverStatus === "checking" &&
+                  homeStyles.statusBadgeTextChecking,
+              ]}
+            >
+              {serverStatus === "connected"
+                ? "Terhubung dengan Laravel"
+                : serverStatus === "disconnected"
+                  ? "Server tidak terhubung"
+                  : "Memeriksa koneksi..."}
+            </Text>
           </View>
 
-          <Text style={homeStyles.greetingTitle}>Halo, Selamat Datang!</Text>
+          <Text style={homeStyles.greetingTitle}>Halo, {user?.name || "Selamat Datang"}!</Text>
           <Text style={homeStyles.greetingEmail}>
-            {email || "mahasiswa@kampus.ac.id"}
+            {user?.email || "mahasiswa@kampus.ac.id"}
           </Text>
         </View>
 

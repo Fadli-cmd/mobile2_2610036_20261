@@ -1,0 +1,10 @@
+MODUL 11 - Integrasi API Laravel + AsyncStorage
+
+1) npm install                       (memasang @react-native-async-storage/async-storage)
+2) Jalankan backend lebih dulu (lihat zip laravel-backend-files, berkas README-BACKEND.txt).
+3) Edit src/config/api.ts -> ganti 192.168.1.15 dengan IPv4 Wi-Fi laptopmu (ipconfig).
+4) npx expo start -c   lalu scan di Expo Go (HP dan laptop satu Wi-Fi).
+
+Alur: Register -> tersimpan di MySQL -> Login (token Sanctum disimpan di AsyncStorage)
+      -> Home/Profil menampilkan data asli -> tutup lalu buka aplikasi = langsung ke Home
+      -> Keluar dari Akun = token dihapus di server dan di HP.
